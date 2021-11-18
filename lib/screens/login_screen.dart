@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobile_app_group_project/components/snackbar.dart';
 import 'package:mobile_app_group_project/constants/constants.dart';
+import 'package:mobile_app_group_project/screens/landing_screen.dart';
 import 'package:mobile_app_group_project/services/firebase_service.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -84,14 +84,10 @@ class LoginScreen extends StatelessWidget {
                         try {
                           await _firebaseService.loginEmailAndPassword(
                               email, password);
-                          // } on FirebaseAuthException catch (e) {
-                          //   if (e.code == 'user-not-found') {
-                          //     snackbar(
-                          //         context, 'No user with that email found', 3);
-                          //   } else if (e.code == 'wrong-password') {
-                          //     snackbar(context,
-                          //         'Wrong password provided for that user.', 3);
-                          //   }
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (con) => LandingScreen()));
                         } catch (e) {
                           snackbar(context, e.toString(), 3);
                         }
@@ -104,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Dont have an account? '),
+                    const Text("Don't have an account?  "),
                     GestureDetector(
                       child: const Text(
                         'Register Now',
@@ -113,8 +109,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
-                        //TODO ADD REGISTER PAGE
-                        // Navigator.of(context).pushNamed('/register');
+                        Navigator.of(context).pushNamed('/register');
                       },
                     )
                   ],

@@ -70,4 +70,24 @@ class FirebaseService {
       }
     }
   }
+
+  static Future<User?> registerEmailPassword({
+    required String email,
+    required String password,
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      throw (e.code);
+    }
+    return user;
+  }
 }
