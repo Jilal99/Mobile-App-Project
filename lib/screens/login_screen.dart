@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobile_app_group_project/components/snackbar.dart';
 import 'package:mobile_app_group_project/constants/constants.dart';
-import 'package:mobile_app_group_project/screens/landing_screen.dart';
 import 'package:mobile_app_group_project/services/firebase_service.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -84,10 +83,6 @@ class LoginScreen extends StatelessWidget {
                         try {
                           await _firebaseService.loginEmailAndPassword(
                               email, password);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (con) => LandingScreen()));
                         } catch (e) {
                           snackbar(context, e.toString(), 3);
                         }

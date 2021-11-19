@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_app_group_project/components/snackbar.dart';
 import 'package:mobile_app_group_project/services/firebase_service.dart';
 import 'package:mobile_app_group_project/constants/constants.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:io';
 
@@ -16,7 +14,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
   final picker = ImagePicker();
   File? _imageFile;
   late TextEditingController _emailController,
@@ -81,8 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     setState(() {
                       if (pickedFile != null) {
                         _imageFile = File(pickedFile.path);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Loaded Image')));
+                        snackbar(context, "Loaded Image", 3);
                       }
                     });
                   },
@@ -95,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: _emailController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
+                    return 'Email cannot be empty';
                   }
                   return null;
                 },
@@ -111,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 autocorrect: false,
                 controller: _reemailController,
                 validator: (value) {
-                  if (value == null || value != _reemailController.text) {
+                  if (value == null || value != _emailController.text) {
                     return 'Email addresses do not match';
                   }
                   return null;
@@ -163,7 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: _firstnameController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Passwords do not match';
+                      return 'First name cannot be empty';
                     }
                     return null;
                   },
@@ -244,55 +240,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Adding User')));
+                      snackbar(context, "Adding User", 3);
+                      FirebaseService.register(
+                          context,
+                          _imageFile,
+                          _emailController.text,
+                          _passwordController.text,
+                          _firstnameController.text,
+                          _lastnameController.text,
+                          _bioController.text,
+                          _hometownController.text,
+                          _yearController.text);
+                      Navigator.of(context).pop();
                     }
-                    await register();
-                    Navigator.of(context).pushNamed('/login');
                   },
                   child: const Text("Register"),
                 ),
               ),
             ])));
-  }
-
-  Future<void> register() async {
-    try {
-      User? user = await FirebaseService.registerEmailPassword(
-          email: _emailController.text, password: _passwordController.text);
-      firebase_storage.FirebaseStorage storage =
-          firebase_storage.FirebaseStorage.instance;
-      String fileName = _imageFile!.path;
-      String? downloadURL;
-      try {
-        await storage.ref('uploads/$fileName').putFile(_imageFile!);
-        downloadURL = await firebase_storage.FirebaseStorage.instance
-            .ref('uploads/$fileName')
-            .getDownloadURL();
-      } on firebase_storage.FirebaseException catch (e) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(e.toString())));
-      }
-      _db
-          .collection("users")
-          .doc(user!.uid)
-          .set({
-            "first_name": _firstnameController.text,
-            "last_name": _lastnameController.text,
-            "timestamp": DateTime.now(),
-            "bio": _bioController.text,
-            "hometown": _hometownController.text,
-            "year": _yearController.text,
-            "picture_url": downloadURL
-          })
-          .then((value) => null)
-          .onError((error, stackTrace) => null);
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
-    } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Registration Error")));
-    }
   }
 }

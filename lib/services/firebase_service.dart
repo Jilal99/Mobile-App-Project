@@ -1,9 +1,17 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app_group_project/components/snackbar.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  static firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
+  static FirebaseFirestore db = FirebaseFirestore.instance;
 
   Future<UserCredential> signInAnon() async {
     return await _auth.signInAnonymously();
@@ -89,5 +97,50 @@ class FirebaseService {
       throw (e.code);
     }
     return user;
+  }
+
+  static Future<void> register(
+      BuildContext context,
+      File? imageFile,
+      String email,
+      String password,
+      String firstname,
+      String lastname,
+      String bio,
+      String hometown,
+      String year) async {
+    try {
+      User? user = await FirebaseService.registerEmailPassword(
+          email: email, password: password);
+
+      String fileName = imageFile!.path;
+      String? downloadURL;
+      try {
+        await storage.ref('uploads/$fileName').putFile(imageFile);
+        downloadURL = await firebase_storage.FirebaseStorage.instance
+            .ref('uploads/$fileName')
+            .getDownloadURL();
+      } on firebase_storage.FirebaseException catch (e) {
+        snackbar(context, e.toString(), 3);
+      }
+      db
+          .collection("users")
+          .doc(user!.uid)
+          .set({
+            "first_name": firstname,
+            "last_name": lastname,
+            "timestamp": DateTime.now(),
+            "bio": bio,
+            "hometown": hometown,
+            "year": year,
+            "picture_url": downloadURL
+          })
+          .then((value) => null)
+          .onError((error, stackTrace) => null);
+    } on FirebaseAuthException catch (e) {
+      snackbar(context, e.toString(), 3);
+    } catch (e) {
+      snackbar(context, "Registration Error", 3);
+    }
   }
 }
