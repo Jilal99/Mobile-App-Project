@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app_group_project/services/firebase_service.dart';
 
+import 'home_screen.dart';
+import 'login_screen.dart';
+
 class LandingScreen extends StatelessWidget {
   LandingScreen({Key? key}) : super(key: key);
 
@@ -15,9 +18,9 @@ class LandingScreen extends StatelessWidget {
         builder: (BuildContext context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData) {
-              return const Text("Home Screen");
+              return const HomeScreen();
             }
-            return const Text("Login Screen");
+            return LoginScreen();
           } else {
             return const Center(
               child: CircularProgressIndicator(),
