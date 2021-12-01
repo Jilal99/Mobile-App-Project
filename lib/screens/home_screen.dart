@@ -11,11 +11,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> tabs = [
-    Center(child: Text("Home", style: TextStyle(color: Colors.white))),
-    Center(child: Text("Search", style: TextStyle(color: Colors.white))),
-    Center(child: Text("Profile", style: TextStyle(color: Colors.white))),
-    Center(child: Text("Notification", style: TextStyle(color: Colors.white))),
-    Center(child: Text("Add item", style: TextStyle(color: Colors.white))),
+    Center(child: Text("Home", style: TextStyle(color: Colors.black))),
+    Center(child: Text("Search", style: TextStyle(color: Colors.black))),
+    Center(child: Text("Profile", style: TextStyle(color: Colors.black))),
+    Center(child: Text("Notification", style: TextStyle(color: Colors.black))),
+    Center(child: Text("Add item", style: TextStyle(color: Colors.black))),
   ];
 
   int currentPage = 0;
