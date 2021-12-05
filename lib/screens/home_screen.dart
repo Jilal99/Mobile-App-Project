@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobile_app_group_project/services/firebase_service.dart';
+import 'package:mobile_app_group_project/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> tabs = [
     Center(child: Text("Home", style: TextStyle(color: Colors.black))),
     Center(child: Text("Search", style: TextStyle(color: Colors.black))),
-    Center(child: Text("Profile", style: TextStyle(color: Colors.black))),
+    UserScreen(uid: FirebaseService.auth.currentUser!.uid),
     Center(child: Text("Notification", style: TextStyle(color: Colors.black))),
     Center(child: Text("Add item", style: TextStyle(color: Colors.black))),
   ];
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconButton(
                     icon: Icon(
                       Icons.search,
-                      color: currentPage == 0 ? Colors.white : Colors.grey,
+                      color: currentPage == 1 ? Colors.white : Colors.grey,
                       size: 30,
                     ),
                     onPressed: () => setPage(1),
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconButton(
                     icon: Icon(
                       Icons.person,
-                      color: currentPage == 0 ? Colors.white : Colors.grey,
+                      color: currentPage == 2 ? Colors.white : Colors.grey,
                       size: 30,
                     ),
                     onPressed: () => setPage(2),
@@ -91,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconButton(
                     icon: Icon(
                       Icons.notifications_outlined,
-                      color: currentPage == 0 ? Colors.white : Colors.grey,
+                      color: currentPage == 3 ? Colors.white : Colors.grey,
                       size: 30,
                     ),
                     onPressed: () => setPage(3),
