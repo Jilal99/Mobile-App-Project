@@ -1,6 +1,6 @@
-import 'package:finapp/PostService.dart';
-import 'package:finapp/post.dart';
-import 'package:finapp/home.dart';
+import 'package:mobile_app_group_project/post_service.dart';
+import 'package:mobile_app_group_project/post.dart';
+import 'package:mobile_app_group_project/home.dart';
 import 'package:flutter/material.dart';
 
 class EditPost extends StatefulWidget {
@@ -31,14 +31,12 @@ class _EditPostState extends State<EditPost> {
                 child: TextFormField(
                   initialValue: widget.post.title,
                   decoration: InputDecoration(
-                      labelText: "Post tilte",
-                      border: OutlineInputBorder()
-                  ),
+                      labelText: "Post tilte", border: OutlineInputBorder()),
                   onSaved: (val) => widget.post.title = val!,
-                  validator: (val){
-                    if(val!.isEmpty ){
+                  validator: (val) {
+                    if (val!.isEmpty) {
                       return "title field cant be empty";
-                    }else if(val.length > 16){
+                    } else if (val.length > 16) {
                       return "title cannot have more than 16 characters ";
                     }
                   },
@@ -49,12 +47,10 @@ class _EditPostState extends State<EditPost> {
                 child: TextFormField(
                   initialValue: widget.post.body,
                   decoration: InputDecoration(
-                      labelText: "Post body",
-                      border: OutlineInputBorder()
-                  ),
+                      labelText: "Post body", border: OutlineInputBorder()),
                   onSaved: (val) => widget.post.body = val!,
-                  validator: (val){
-                    if(val!.isEmpty){
+                  validator: (val) {
+                    if (val!.isEmpty) {
                       return "body field cant be empty";
                     }
                   },
@@ -62,20 +58,26 @@ class _EditPostState extends State<EditPost> {
               ),
             ],
           )),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        insertPost();
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          insertPost();
 //        Navigator.pop(context);
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
-      },
-        child: Icon(Icons.edit, color: Colors.white,),
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        },
+        child: Icon(
+          Icons.edit,
+          color: Colors.white,
+        ),
         backgroundColor: Colors.red,
-        tooltip: "exit a post",),
+        tooltip: "exit a post",
+      ),
     );
   }
 
   void insertPost() {
     final FormState? form = formkey.currentState;
-    if(form!.validate()){
+    if (form!.validate()) {
       form.save();
       form.reset();
       widget.post.date = DateTime.now().millisecondsSinceEpoch;
@@ -83,6 +85,4 @@ class _EditPostState extends State<EditPost> {
       postService.updatePost();
     }
   }
-
-
 }

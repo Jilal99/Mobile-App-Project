@@ -1,9 +1,7 @@
-import 'dart:io';
-
-import 'package:finapp/PostService.dart';
-import 'package:finapp/post.dart';
-import 'package:finapp/home.dart';
+import 'package:mobile_app_group_project/post_service.dart';
+import 'package:mobile_app_group_project/post.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_app_group_project/home.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({Key? key}) : super(key: key);
@@ -31,14 +29,12 @@ class _AddPostState extends State<AddPost> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: const InputDecoration(
-                      labelText: "Post tilte",
-                      border: OutlineInputBorder()
-                  ),
+                      labelText: "Post title", border: OutlineInputBorder()),
                   onSaved: (val) => post != null ? post!.title = val! : null,
-                  validator: (val){
-                    if(val!.isEmpty ){
+                  validator: (val) {
+                    if (val!.isEmpty) {
                       return "title field cant be empty";
-                    }else if(val.length > 16){
+                    } else if (val.length > 16) {
                       return "title cannot have more than 16 characters ";
                     }
                   },
@@ -48,12 +44,10 @@ class _AddPostState extends State<AddPost> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: const InputDecoration(
-                      labelText: "Post body",
-                      border: OutlineInputBorder()
-                  ),
+                      labelText: "Post body", border: OutlineInputBorder()),
                   onSaved: (val) => post != null ? post!.body = val! : null,
-                  validator: (val){
-                    if(val!.isEmpty){
+                  validator: (val) {
+                    if (val!.isEmpty) {
                       return "body field cant be empty";
                     }
                   },
@@ -61,29 +55,34 @@ class _AddPostState extends State<AddPost> {
               ),
             ],
           )),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        insertPost();
-        Navigator.pop(context);
-//        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
-      },
-        child: Icon(Icons.add, color: Colors.white,),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          insertPost();
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        },
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         backgroundColor: Colors.red,
-        tooltip: "add a post",),
+        tooltip: "add a post",
+      ),
     );
   }
 
   void insertPost() {
     final FormState? form = formkey.currentState;
-    if(form!.validate()){
+    if (form!.validate()) {
       form.save();
       form.reset();
-      post = Post(date: DateTime.now().millisecondsSinceEpoch , title:'Forum page', body: 'type input', key: DateTime.now().millisecondsSinceEpoch);
-      post!.date = DateTime.now().millisecondsSinceEpoch;
+      post = Post(
+          date: DateTime.now().millisecondsSinceEpoch,
+          title: 'Forum page',
+          body: 'type input',
+          key: DateTime.now().millisecondsSinceEpoch);
       PostService postService = PostService(post!.toMap());
       postService.addPost();
     }
   }
-
-
-
 }
