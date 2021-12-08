@@ -19,6 +19,10 @@ class _AddPostState extends State<AddPost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("add post"),
+        elevation: 0.0,
+      ),
       body: Form(
           key: formkey,
           child: ListView(
