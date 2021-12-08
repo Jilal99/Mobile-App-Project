@@ -6,7 +6,7 @@ import 'package:mobile_app_group_project/components/snackbar.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class FirebaseService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  static FirebaseAuth auth = FirebaseAuth.instance;
 
   static firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
@@ -14,11 +14,11 @@ class FirebaseService {
   static FirebaseFirestore db = FirebaseFirestore.instance;
 
   Future<UserCredential> signInAnon() async {
-    return await _auth.signInAnonymously();
+    return await auth.signInAnonymously();
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    await auth.signOut();
   }
 
   Future<void> userLogout(BuildContext context) {
@@ -46,7 +46,7 @@ class FirebaseService {
               child: const Text('YES'),
               onPressed: () async {
                 try {
-                  await _auth.signOut();
+                  await auth.signOut();
                   snackbar(context, 'User successfully logged out.', 5);
                   Navigator.of(context).pop();
                 } catch (error) {
@@ -61,7 +61,7 @@ class FirebaseService {
   }
 
   Stream<User?> userChangesStream() {
-    return _auth.userChanges();
+    return auth.userChanges();
   }
 
   Future<UserCredential?> loginEmailAndPassword(

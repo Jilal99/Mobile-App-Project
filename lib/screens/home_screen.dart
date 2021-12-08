@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mobile_app_group_project/services/firebase_service.dart';
 import 'package:mobile_app_group_project/add_post.dart';
 import 'package:mobile_app_group_project/home.dart';
+import 'package:mobile_app_group_project/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> tabs = [
     HomePage(),
     Center(child: Text("Search", style: TextStyle(color: Colors.black))),
-    Center(child: Text("Profile", style: TextStyle(color: Colors.black))),
+    UserScreen(uid: FirebaseService.auth.currentUser!.uid),
     Center(child: Text("Notification", style: TextStyle(color: Colors.black))),
     AddPost()
     //Center(child: Text("Add item", style: TextStyle(color: Colors.black))),
