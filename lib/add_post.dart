@@ -13,6 +13,8 @@ class AddPost extends StatefulWidget {
 class _AddPostState extends State<AddPost> {
   final GlobalKey<FormState> formkey = GlobalKey();
   Post? post;
+  String title = '';
+  String body = '';
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,9 @@ class _AddPostState extends State<AddPost> {
                 child: TextFormField(
                   decoration: const InputDecoration(
                       labelText: "Post title", border: OutlineInputBorder()),
-                  onSaved: (val) => post != null ? post!.title = val! : null,
+                  onChanged: (value) {
+                    title = value;
+                  },
                   validator: (val) {
                     if (val!.isEmpty) {
                       return "title field cant be empty";
@@ -45,7 +49,9 @@ class _AddPostState extends State<AddPost> {
                 child: TextFormField(
                   decoration: const InputDecoration(
                       labelText: "Post body", border: OutlineInputBorder()),
-                  onSaved: (val) => post != null ? post!.body = val! : null,
+                  onChanged: (value) {
+                    body = value;
+                  },
                   validator: (val) {
                     if (val!.isEmpty) {
                       return "body field cant be empty";
@@ -78,8 +84,8 @@ class _AddPostState extends State<AddPost> {
       form.reset();
       post = Post(
           date: DateTime.now().millisecondsSinceEpoch,
-          title: 'Forum page',
-          body: 'type input',
+          title: title,
+          body: body,
           key: DateTime.now().millisecondsSinceEpoch);
       PostService postService = PostService(post!.toMap());
       postService.addPost();
