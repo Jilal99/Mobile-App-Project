@@ -64,8 +64,9 @@ class _AddPostState extends State<AddPost> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           insertPost();
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+          Navigator.of(context).pop();
+          //Navigator.pushReplacement(
+          //context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Icon(
           Icons.add,
