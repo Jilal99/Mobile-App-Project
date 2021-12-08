@@ -1,7 +1,6 @@
 import 'package:mobile_app_group_project/post_service.dart';
 import 'package:mobile_app_group_project/post.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_app_group_project/home.dart';
 import 'package:mobile_app_group_project/screens/home_screen.dart';
 
 class AddPost extends StatefulWidget {
@@ -21,7 +20,7 @@ class _AddPostState extends State<AddPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("add post"),
+        title: const Text("Add Post"),
         elevation: 0.0,
       ),
       body: Form(
@@ -32,15 +31,15 @@ class _AddPostState extends State<AddPost> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: const InputDecoration(
-                      labelText: "Post title", border: OutlineInputBorder()),
+                      labelText: "Post Title", border: OutlineInputBorder()),
                   onChanged: (value) {
                     title = value;
                   },
                   validator: (val) {
                     if (val!.isEmpty) {
-                      return "title field cant be empty";
+                      return "Title field can't be empty";
                     } else if (val.length > 16) {
-                      return "title cannot have more than 16 characters ";
+                      return "Title cannot have more than 16 characters ";
                     }
                   },
                 ),
@@ -49,13 +48,13 @@ class _AddPostState extends State<AddPost> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: const InputDecoration(
-                      labelText: "Post body", border: OutlineInputBorder()),
+                      labelText: "Post Body", border: OutlineInputBorder()),
                   onChanged: (value) {
                     body = value;
                   },
                   validator: (val) {
                     if (val!.isEmpty) {
-                      return "body field cant be empty";
+                      return "Body field can't be empty";
                     }
                   },
                 ),
@@ -70,11 +69,11 @@ class _AddPostState extends State<AddPost> {
               context, MaterialPageRoute(builder: (context) => HomeScreen()));
         },
         child: Icon(
-          Icons.add,
+          Icons.post_add_outlined,
           color: Colors.white,
         ),
         backgroundColor: Colors.red,
-        tooltip: "add a post",
+        tooltip: "Add a Post",
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:mobile_app_group_project/post_service.dart';
 import 'package:mobile_app_group_project/post.dart';
-import 'package:mobile_app_group_project/home.dart';
+import 'package:mobile_app_group_project/forum_home.dart';
 import 'package:flutter/material.dart';
 
 class EditPost extends StatefulWidget {

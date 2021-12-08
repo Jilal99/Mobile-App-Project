@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mobile_app_group_project/screens/conversations_screen.dart';
+import 'package:mobile_app_group_project/screens/user_list_screen.dart';
 import 'package:mobile_app_group_project/services/firebase_service.dart';
 import 'package:mobile_app_group_project/add_post.dart';
-import 'package:mobile_app_group_project/home.dart';
+import 'package:mobile_app_group_project/forum_home.dart';
 import 'package:mobile_app_group_project/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,9 +17,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Widget> tabs = [
     HomePage(),
-    Center(child: Text("Search", style: TextStyle(color: Colors.black))),
+    UserListScreen(),
     UserScreen(uid: FirebaseService.auth.currentUser!.uid),
-    Center(child: Text("Notification", style: TextStyle(color: Colors.black))),
+    ConversationListScreen(),
     AddPost()
     //Center(child: Text("Add item", style: TextStyle(color: Colors.black))),
   ];
@@ -33,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HOME SCREEN', style: TextStyle(fontSize: 18)),
+        title: const Text('Chat Cafe', style: TextStyle(fontSize: 18)),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -78,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   IconButton(
                     icon: Icon(
-                      Icons.search,
+                      Icons.people,
                       color: currentPage == 1 ? Colors.white : Colors.grey,
                       size: 30,
                     ),
@@ -95,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   IconButton(
                     icon: Icon(
-                      Icons.notifications_outlined,
+                      Icons.chat_bubble,
                       color: currentPage == 3 ? Colors.white : Colors.grey,
                       size: 30,
                     ),
