@@ -48,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: tabs[currentPage],
       floatingActionButton: FloatingActionButton(
+        heroTag: "btn2",
         backgroundColor: Colors.blue.shade400,
         onPressed: () => setPage(4),
         child: Icon(

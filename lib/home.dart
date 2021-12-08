@@ -93,6 +93,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "btn1",
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => AddPost()));
