@@ -2,6 +2,7 @@ import 'package:mobile_app_group_project/post_service.dart';
 import 'package:mobile_app_group_project/post.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app_group_project/home.dart';
+import 'package:mobile_app_group_project/screens/home_screen.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({Key? key}) : super(key: key);
@@ -64,9 +65,9 @@ class _AddPostState extends State<AddPost> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           insertPost();
-          Navigator.of(context).pop();
-          //Navigator.pushReplacement(
-          //context, MaterialPageRoute(builder: (context) => HomePage()));
+          //Navigator.of(context).pop();
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomeScreen()));
         },
         child: Icon(
           Icons.add,
