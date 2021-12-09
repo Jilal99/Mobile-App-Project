@@ -1,2 +1,2 @@
 # Mobile-App-Project
-test commit
+Use the Android emulator for this project!
